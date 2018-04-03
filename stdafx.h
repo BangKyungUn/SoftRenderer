@@ -19,3 +19,11 @@
 #include <math.h>
 
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
+#define PI 3.141592f
+#define KINDA_SMALL_NUMBER 1.e-4f
+#define FORCEINLINE __forceinline
+
+FORCEINLINE float Deg2Rad(float degree)
+{
+	return degree * PI / 180.0f;
+}
