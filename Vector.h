@@ -3,6 +3,18 @@
 #include "stdafx.h"
 #include "Matrix.h"
 
+struct IntPoint
+{
+public:
+	int X;
+	int Y;
+
+public:
+	IntPoint() : X(0), Y(0) {}
+	IntPoint(int InX, int InY) : X(InX), Y(InY) {}
+
+};
+
 struct Vector2
 {
 public:
@@ -19,6 +31,16 @@ public:
 	Vector2 operator *(const Matrix2 Mat) const;
 	bool Equals(const Vector2& V, float Tolerance = KINDA_SMALL_NUMBER) const;
 
+	IntPoint ToIntPoint() 
+	{
+		return IntPoint(RoundToInt(X), RoundToInt(Y));
+	}
+
+	float Dot(const Vector2 v) const
+	{
+		return X * v.X + Y * v.Y;
+	}
+
 };
 
 FORCEINLINE bool Vector2::Equals(const Vector2& V, float Tolerance) const
@@ -32,6 +54,9 @@ public:
 	float X;
 	float Y;
 	float Z;
+
+	Vector3() : X(0), Y(0), Z(0) {}
+	Vector3(float InX, float InY, float InZ) : X(InX), Y(InY), Z(InZ) {}
 
 	void SetPoint(float InX, float InY)
 	{
@@ -55,6 +80,22 @@ public:
 	float DistSquared()
 	{
 		return X * X + Y * Y;
+	}
+
+	Vector2 ToVector2()
+	{
+		Vector2 result(X, Y);
+		return result;
+	}
+
+	IntPoint ToIntPoint()
+	{
+		return IntPoint(RoundToInt(X), RoundToInt(Y));
+	}
+
+	float Dot(const Vector3 v) const
+	{
+		return X * v.X + Y * v.Y + Z * v.Z;
 	}
 
 	Vector3 operator*(float scale) const;
