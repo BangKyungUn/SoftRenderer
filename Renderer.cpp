@@ -51,57 +51,12 @@ void Draw2DTriangle(Triangle t)
 			t.CalcBaryCentricCoord(target, &outS, &outT);
 			if (t.IsInTrianble(outS, outT))
 			{
+				g_CurrentColor = t.GetPixelColor(target, outS, outT);
 				PutPixel(IntPoint(x, y));
 			}			
 		}
 	}
 }
-
-//void Draw2DTriangle(const Vector3& v1, const Vector3& v2, const Vector3& v3)
-//{
-
-	//float xMin, yMin;
-	//float xMax, yMax;
-	//xMin = yMin = INFINITY;
-	//xMax = yMax = -INFINITY;
-
-	//if (v1.X < xMin) xMin = v1.X;
-	//if (v2.X < xMin) xMin = v2.X;
-	//if (v3.X < xMin) xMin = v3.X;
-	//if (v1.X > xMax) xMax = v1.X;
-	//if (v2.X > xMax) xMax = v2.X;
-	//if (v3.X > xMax) xMax = v3.X;
-	//if (v1.Y < yMin) yMin = v1.Y;
-	//if (v2.Y < yMin) yMin = v2.Y;
-	//if (v3.Y < yMin) yMin = v3.Y;
-	//if (v1.Y > yMax) yMax = v1.Y;
-	//if (v2.Y > yMax) yMax = v2.Y;
-	//if (v3.Y > yMax) yMax = v3.Y;
-
-	//Vector2 u = (v2 - v1).ToVector2();
-	//Vector2 v = (v3 - v1).ToVector2();
-	//float dotUU = u.Dot(u);
-	//float dotUV = u.Dot(v);
-	//float dotVV = v.Dot(v);
-	//float invDenom = 1.0f / (dotUU * dotVV - dotUV * dotUV);
-
-	//for (int y = RoundToInt(yMin); y < RoundToInt(yMax); y++)
-	//{
-	//	for (int x = RoundToInt(xMin); x < RoundToInt(xMax); x++)
-	//	{
-	//		Vector2 w = (Vector3((float)x, (float)y, 0.0f) - v1).ToVector2();
-	//		float dotUW = u.Dot(w);
-	//		float dotVW = v.Dot(w);
-	//		float outS = (dotVV * dotUW - dotUV * dotVW) * invDenom;
-	//		float outT = (dotUU * dotVW - dotUV * dotUW) * invDenom;
-	//		if (outS < 0.0f) continue;
-	//		if (outT < 0.0f) continue;
-	//		if (outS + outT > 1.0f) continue;
-
-	//		PutPixel(IntPoint(x, y));
-	//	}
-	//}
-//}
 
 void UpdateFrame(void)
 {
@@ -140,19 +95,21 @@ void UpdateFrame(void)
 	SMat.SetScale(scale);
 	Matrix3 TRSMat = TMat * RMat * SMat;
 
-	Pt1.SetPoint(0.0f, 0.0f);
-	Pt2.SetPoint(160.0f, 160.0f);
-	Pt3.SetPoint(-20.0f, 160.0f);
+	Pt1.SetPoint(-160.0f, -160.0f);
+	Pt2.SetPoint(200.0f, 120.0f);
+	Pt3.SetPoint(-160.0f, 160.0f);
 
-	Vertex v1(Pt1);
-	Vertex v2(Pt2);
-	Vertex v3(Pt3);
+	Vertex v1(Pt1 * TRSMat);
+	v1.color = RGB(255, 0, 0);
+	Vertex v2(Pt2 * TRSMat);
+	v2.color = RGB(0, 255, 0);
+	Vertex v3(Pt3 * TRSMat);
+	v3.color = RGB(0, 0, 255);
 
 	Triangle T1(v1, v2, v3);
 
 	SetColor(255, 0, 0);
 	Draw2DTriangle(T1);
-	//Draw2DTriangle(Pt1 * TRSMat, Pt2 * TRSMat, Pt3 * TRSMat);
 
 	// Buffer Swap 
 	BufferSwap();
