@@ -24,3 +24,15 @@ ULONG Texture::GetPixel(int x, int y)
 
 	return ::GetPixel(x, width, y, Buffer);
 }
+
+ULONG Texture::GetTexturePixel(float s, float t, const Triangle & tri)
+{
+	Vector2 UV0 = tri.vt[0].uv;
+	Vector2 UV0ToUV1 = tri.vt[1].uv - tri.vt[0].uv;
+	Vector2 UV0ToUV2 = tri.vt[2].uv - tri.vt[0].uv;
+
+	Vector2 UVResult = UV0 + UV0ToUV1 * s + UV0ToUV2 * t;
+	int PixelX = RoundToInt(UVResult.X * (width - 1));
+	int PixelY = RoundToInt(UVResult.Y * (height - 1));
+	return GetPixel(PixelX, PixelY);
+}

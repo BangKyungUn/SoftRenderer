@@ -77,9 +77,9 @@ ULONG* OpenBMP(char *filename, int *width, int *height)
 			
 			BYTE *CurrentColor = (BYTE *)(pImageBuf + DestIndex);
 			CurrentColor[0] = 255;
-			CurrentColor[1] = BValue;
+			CurrentColor[1] = RValue;
 			CurrentColor[2] = GValue;
-			CurrentColor[3] = RValue;
+			CurrentColor[3] = BValue;
 			//pImageBuf[j * (bmpih.biWidth * 4) + i] = (ULONG)BValue | ((ULONG)GValue) << 8 | ((ULONG)RValue) << 16 | ((ULONG)255) << 24;
 		}
 	}

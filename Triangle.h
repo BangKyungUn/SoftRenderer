@@ -10,6 +10,7 @@ public:
 	Vertex(Vector3 v) { position = v; }
 	Vector3 position;
 	ULONG color;
+	Vector2 uv;
 };
 
 struct Triangle
@@ -87,5 +88,6 @@ public:
 		BYTE FinalB = RoundToInt(BV0 * (1.0f - s - t) + BV1 * s + BV2 * t);
 		return RGB(FinalB, FinalG, FinalR);
 	}
+
 };
 
